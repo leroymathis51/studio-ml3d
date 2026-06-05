@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Studio ML3D — Impression 3D & Conception SolidWorks</title>
+<meta name="description" content="Studio ML3D, Mathis Leroy — Conception SolidWorks et impression 3D à Reims. Produits série, sur mesure pour particuliers, prototypage pour professionnels.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black: #0e0e0d;
+  --white: #fafaf8;
+  --gray-100: #f2f1ee;
+  --gray-200: #e4e3de;
+  --gray-400: #a8a69e;
+  --gray-600: #6b6a64;
+  --accent: #c8501a;
+  --accent-light: #f5ede8;
+  --font-display: 'DM Serif Display', serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--white);
+  color: var(--black);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 5vw;
+  height: 64px;
+  background: rgba(250,250,248,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  letter-spacing: -.01em;
+  color: var(--black);
+  text-decoration: none;
+}
+
+.nav-logo span { color: var(--accent); }
+
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--gray-600);
+  text-decoration: none;
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--black); }
+
+.nav-cta {
+  background: var(--black) !important;
+  color: var(--white) !important;
+  padding: 8px 18px;
+  border-radius: 100px;
+  font-weight: 500 !important;
+  font-size: 0.875rem !important;
+  transition: background .2s !important;
+}
+.nav-cta:hover { background: var(--accent) !important; }
+
+/* Dropdown */
+.nav-item { position: relative; }
+
+.nav-item > a {
+  display: flex; align-items: center; gap: 5px;
+}
+
+.nav-item > a::after {
+  content: '';
+  display: block;
+  width: 0; height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid currentColor;
+  opacity: 0.5;
+  transition: transform .2s;
+}
+
+.nav-item:hover > a::after { transform: rotate(180deg); opacity: 1; }
+
+.nav-dropdown {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: 12px;
+  padding: 8px;
+  min-width: 220px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease;
+  z-index: 200;
+}
+
+.nav-item:hover .nav-dropdown {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateX(-50%) translateY(0);
+}
+
+.nav-dropdown a {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background .15s;
+  color: var(--black) !important;
+  font-size: 0.875rem !important;
+}
+
+.nav-dropdown a:hover { background: var(--gray-100); color: var(--black) !important; }
+
+.nav-dd-icon {
+  width: 30px; height: 30px; border-radius: 7px;
+  background: var(--accent-light);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.nav-dd-icon svg { width: 15px; height: 15px; stroke: var(--accent); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+.nav-dd-text { display: flex; flex-direction: column; }
+.nav-dd-title { font-weight: 500; font-size: 0.875rem; color: var(--black); }
+.nav-dd-sub { font-size: 0.75rem; color: var(--gray-400); margin-top: 1px; }
+
+#hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-top: 64px;
+}
+
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 6rem 5vw 6rem 5vw;
+}
+
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 2rem;
+}
+.hero-tag::before { content: ''; display: block; width: 24px; height: 1px; background: var(--accent); }
+
+h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 5vw, 4.5rem);
+  line-height: 1.08;
+  letter-spacing: -.02em;
+  margin-bottom: 1.5rem;
+}
+h1 em { font-style: italic; color: var(--accent); }
+
+.hero-desc {
+  font-size: 1.0625rem;
+  color: var(--gray-600);
+  max-width: 420px;
+  margin-bottom: 3rem;
+  line-height: 1.7;
+}
+
+.hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.btn-primary {
+  background: var(--black);
+  color: var(--white);
+  padding: 14px 28px;
+  border-radius: 100px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background .2s, transform .15s;
+  display: inline-block;
+  border: none; cursor: pointer; font-family: var(--font-body);
+}
+.btn-primary:hover { background: var(--accent); transform: translateY(-1px); }
+
+.btn-secondary {
+  background: transparent;
+  color: var(--black);
+  padding: 14px 28px;
+  border-radius: 100px;
+  border: 1px solid var(--gray-200);
+  font-size: 0.9375rem;
+  font-weight: 400;
+  text-decoration: none;
+  transition: border-color .2s, transform .15s;
+  display: inline-block;
+}
+.btn-secondary:hover { border-color: var(--gray-400); transform: translateY(-1px); }
+
+.hero-stats {
+  display: flex; gap: 2.5rem;
+  margin-top: 4rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--gray-200);
+}
+.hero-stat-num { font-family: var(--font-display); font-size: 2rem; line-height: 1; }
+.hero-stat-label { font-size: 0.8125rem; color: var(--gray-400); margin-top: 4px; }
+
+.hero-right {
+  background: var(--gray-100);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-visual {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  padding: 3rem;
+}
+
+#vase-wrap {
+  position: relative;
+  width: 280px; height: 380px;
+  cursor: ns-resize;
+  user-select: none;
+}
+
+#vase-canvas {
+  width: 100%; height: 100%;
+  display: block;
+}
+
+.vase-hint {
+  position: absolute; bottom: -28px; left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.7rem; color: var(--gray-400);
+  letter-spacing: .06em; text-transform: uppercase;
+  white-space: nowrap;
+  display: flex; align-items: center; gap: 6px;
+}
+.vase-hint svg { width: 14px; height: 14px; stroke: var(--gray-400); fill: none; stroke-width: 1.5; }
+
+.hero-label {
+  position: absolute; bottom: 2rem; left: 2rem;
+  font-size: 0.75rem; color: var(--gray-400);
+  letter-spacing: .06em; text-transform: uppercase;
+}
+
+section { padding: 7rem 5vw; }
+
+.section-tag {
+  font-size: 0.75rem; font-weight: 500;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 8px;
+}
+.section-tag::before { content: ''; display: block; width: 24px; height: 1px; background: var(--accent); }
+
+h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  line-height: 1.1; letter-spacing: -.02em;
+  margin-bottom: 1.25rem;
+}
+h2 em { font-style: italic; color: var(--accent); }
+
+.section-intro { font-size: 1.0625rem; color: var(--gray-600); max-width: 520px; line-height: 1.7; }
+
+/* SERVICES */
+.services-header {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 4rem; margin-bottom: 4rem; align-items: end;
+}
+
+.services-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--gray-200);
+  border: 1px solid var(--gray-200); border-radius: 16px; overflow: hidden;
+}
+
+.service-card { background: var(--white); padding: 2.5rem 2rem; transition: background .2s; }
+.service-card:hover { background: var(--gray-100); }
+
+.service-icon {
+  width: 44px; height: 44px; border-radius: 10px;
+  background: var(--accent-light);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.5rem;
+}
+.service-icon svg { width: 22px; height: 22px; stroke: var(--accent); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+.service-card h3 { font-family: var(--font-display); font-size: 1.25rem; margin-bottom: .75rem; }
+.service-card p { font-size: 0.9375rem; color: var(--gray-600); line-height: 1.65; margin-bottom: 1.5rem; }
+.service-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.stag { font-size: 0.75rem; padding: 3px 10px; background: var(--gray-100); border-radius: 100px; color: var(--gray-600); }
+
+/* PROCESS */
+#process { background: var(--black); color: var(--white); }
+#process .section-tag { color: var(--accent); }
+#process h2 { color: var(--white); }
+#process .section-intro { color: rgba(255,255,255,0.5); }
+
+.process-steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 2rem; margin-top: 4rem; }
+.process-step { border-top: 1px solid rgba(255,255,255,.12); padding-top: 1.75rem; }
+.process-num { font-family: var(--font-display); font-size: 3rem; color: rgba(255,255,255,.1); line-height: 1; margin-bottom: 1.25rem; }
+.process-step h3 { font-size: 1rem; font-weight: 500; margin-bottom: .75rem; }
+.process-step p { font-size: 0.875rem; color: rgba(255,255,255,.45); line-height: 1.65; }
+
+/* MATERIAUX */
+#materiaux { background: var(--gray-100); }
+.mat-header { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end; margin-bottom: 3.5rem; }
+.mat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+.mat-card { background: var(--white); border-radius: 12px; padding: 1.5rem; border: 1px solid var(--gray-200); }
+.mat-name { font-family: var(--font-display); font-size: 1.125rem; margin-bottom: .375rem; }
+.mat-desc { font-size: 0.875rem; color: var(--gray-600); margin-bottom: 1rem; }
+.mat-uses { display: flex; flex-wrap: wrap; gap: 5px; }
+.mat-use { font-size: 0.72rem; padding: 2px 9px; border-radius: 100px; background: var(--accent-light); color: var(--accent); font-weight: 500; }
+
+/* ABOUT */
+#about {
+  background: var(--white);
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 6rem; align-items: center; padding: 7rem 5vw;
+}
+.about-visual {
+  background: var(--gray-100); border-radius: 20px;
+  aspect-ratio: 4/5;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.about-placeholder { text-align: center; }
+.about-placeholder .icon { width: 80px; height: 80px; background: var(--gray-200); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; }
+.about-placeholder .icon svg { width: 36px; height: 36px; stroke: var(--gray-400); fill: none; stroke-width: 1.5; }
+.about-placeholder p { font-size: 0.8125rem; color: var(--gray-400); }
+.about-tag { color: var(--accent); font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; font-weight: 500; display: flex; align-items: center; gap: 8px; margin-bottom: 1rem; }
+.about-tag::before { content: ''; display: block; width: 24px; height: 1px; background: var(--accent); }
+.about-text h2 { margin-bottom: 1.25rem; }
+.about-text p { font-size: 1rem; color: var(--gray-600); line-height: 1.75; margin-bottom: 1.25rem; }
+.about-highlights { display: flex; flex-direction: column; gap: 10px; margin-top: 2rem; }
+.about-highlight { display: flex; align-items: center; gap: 12px; font-size: 0.9375rem; }
+.about-highlight::before { content: ''; display: block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+/* DEVIS */
+#devis { background: var(--gray-100); }
+.devis-inner { max-width: 680px; margin: 0 auto; text-align: center; }
+.devis-inner h2 { margin-bottom: 1rem; }
+.devis-inner .section-intro { margin: 0 auto 3rem; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; text-align: left; }
+.form-full { grid-column: 1 / -1; }
+label { display: block; font-size: 0.8125rem; font-weight: 500; color: var(--gray-600); margin-bottom: 6px; }
+input, select, textarea {
+  width: 100%; background: var(--white); border: 1px solid var(--gray-200);
+  border-radius: 10px; padding: 12px 16px; font-size: 0.9375rem;
+  font-family: var(--font-body); color: var(--black); transition: border-color .2s;
+  outline: none; -webkit-appearance: none;
+}
+input:focus, select:focus, textarea:focus { border-color: var(--black); }
+textarea { resize: vertical; min-height: 120px; }
+.form-submit { margin-top: 24px; display: flex; justify-content: center; }
+.form-note { font-size: 0.8125rem; color: var(--gray-400); margin-top: 1rem; }
+
+/* FAQ */
+#faq { background: var(--white); }
+.faq-inner { max-width: 700px; margin: 0 auto; }
+.faq-header { margin-bottom: 3rem; }
+.faq-item { border-bottom: 1px solid var(--gray-200); }
+.faq-q {
+  width: 100%; background: none; border: none; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.25rem 0; font-size: 1rem; font-weight: 500;
+  font-family: var(--font-body); color: var(--black); text-align: left; gap: 1rem;
+}
+.faq-q:hover { color: var(--accent); }
+.faq-arrow { width: 20px; height: 20px; flex-shrink: 0; transition: transform .2s; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.faq-item.open .faq-arrow { transform: rotate(180deg); }
+.faq-a { overflow: hidden; max-height: 0; transition: max-height .3s ease; }
+.faq-a-inner { font-size: 0.9375rem; color: var(--gray-600); line-height: 1.7; padding-bottom: 1.25rem; }
+
+/* FOOTER */
+footer {
+  background: var(--black); color: rgba(255,255,255,.45);
+  padding: 3rem 5vw;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;
+}
+.footer-logo { font-family: var(--font-display); font-size: 1.125rem; color: var(--white); text-decoration: none; }
+.footer-logo span { color: var(--accent); }
+.footer-links { display: flex; gap: 1.5rem; list-style: none; }
+.footer-links a { font-size: 0.8125rem; color: rgba(255,255,255,.4); text-decoration: none; transition: color .2s; }
+.footer-links a:hover { color: var(--white); }
+.footer-copy { font-size: 0.8125rem; width: 100%; }
+
+/* BOUTIQUE */
+#boutique { background: var(--white); }
+
+.boutique-header {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 4rem; margin-bottom: 4rem; align-items: end;
+}
+
+.boutique-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.product-card {
+  border: 1px solid var(--gray-200);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform .2s, box-shadow .2s;
+  background: var(--white);
+}
+.product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+
+.product-img {
+  aspect-ratio: 1;
+  background: var(--gray-100);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.product-img img { width: 100%; height: 100%; object-fit: cover; }
+
+.product-placeholder {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+}
+.product-placeholder svg { width: 36px; height: 36px; stroke: var(--gray-400); fill: none; stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; }
+.product-placeholder span { font-size: 0.75rem; color: var(--gray-400); }
+
+.product-badge {
+  position: absolute; top: 12px; left: 12px;
+  font-size: 0.7rem; font-weight: 500;
+  padding: 3px 9px; border-radius: 100px;
+  letter-spacing: .04em;
+}
+.badge-new { background: var(--black); color: var(--white); }
+.badge-soon { background: var(--gray-200); color: var(--gray-600); }
+
+.product-info { padding: 1.125rem 1.25rem 1.25rem; }
+
+.product-name {
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  margin-bottom: 4px;
+}
+
+.product-desc {
+  font-size: 0.8125rem;
+  color: var(--gray-600);
+  line-height: 1.55;
+  margin-bottom: 1rem;
+}
+
+.product-footer {
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.product-price {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--black);
+}
+
+.btn-buy {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--black);
+  color: var(--white);
+  padding: 8px 16px;
+  border-radius: 100px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background .2s;
+  white-space: nowrap;
+}
+.btn-buy:hover { background: var(--accent); }
+.btn-buy svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+.btn-buy-soon {
+  display: inline-flex; align-items: center;
+  background: var(--gray-100);
+  color: var(--gray-400);
+  padding: 8px 16px;
+  border-radius: 100px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: default;
+  white-space: nowrap;
+}
+
+.boutique-cta {
+  text-align: center;
+  margin-top: 3rem;
+  padding-top: 3rem;
+  border-top: 1px solid var(--gray-200);
+}
+.boutique-cta p { font-size: 0.9375rem; color: var(--gray-600); margin-bottom: 1.25rem; }
+
+/* ANIMATIONS */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .65s ease, transform .65s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  #hero { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+  .boutique-header { grid-template-columns: 1fr; gap: 1.5rem; }
+  .boutique-grid { grid-template-columns: 1fr 1fr; }
+  .services-grid { grid-template-columns: 1fr; }
+  .process-steps { grid-template-columns: 1fr 1fr; }
+  .mat-header { grid-template-columns: 1fr; gap: 1.5rem; }
+  #about { grid-template-columns: 1fr; }
+  .about-visual { display: none; }
+  .form-grid { grid-template-columns: 1fr; }
+  nav .nav-links { display: none; }
+}
+@media (max-width: 600px) {
+  section { padding: 5rem 6vw; }
+  #about { padding: 5rem 6vw; }
+  .process-steps { grid-template-columns: 1fr; }
+  .mat-grid { grid-template-columns: 1fr; }
+  .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Studio <span>ML</span>3D</a>
+  <ul class="nav-links">
+    <li class="nav-item">
+      <a href="#services">Services</a>
+      <div class="nav-dropdown">
+        <a href="#boutique">
+          <div class="nav-dd-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
+          <div class="nav-dd-text">
+            <span class="nav-dd-title">Boutique</span>
+            <span class="nav-dd-sub">Produits série prêts à expédier</span>
+          </div>
+        </a>
+        <a href="#services">
+          <div class="nav-dd-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+          <div class="nav-dd-text">
+            <span class="nav-dd-title">Sur mesure</span>
+            <span class="nav-dd-sub">Conception & impression à la demande</span>
+          </div>
+        </a>
+        <a href="#services">
+          <div class="nav-dd-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+          <div class="nav-dd-text">
+            <span class="nav-dd-title">Prototypage B2B</span>
+            <span class="nav-dd-sub">Prototypes & petites séries pro</span>
+          </div>
+        </a>
+      </div>
+    </li>
+    <li><a href="#boutique">Boutique</a></li>
+    <li><a href="#materiaux">Matériaux</a></li>
+    <li><a href="#about">À propos</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#devis" class="nav-cta">Devis gratuit</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Impression 3D · Reims</div>
+    <h1>De l'idée à la <em>pièce réelle</em></h1>
+    <p class="hero-desc">Conception SolidWorks et impression 3D pour particuliers et professionnels. Produits série, sur mesure, et prototypage industriel.</p>
+    <div class="hero-btns">
+      <a href="#devis" class="btn-primary">Demander un devis</a>
+      <a href="#services" class="btn-secondary">Voir les services</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">FDM</div>
+        <div class="hero-stat-label">Multi-matériaux</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">CAO</div>
+        <div class="hero-stat-label">SolidWorks certifié</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">3→1</div>
+        <div class="hero-stat-label">De l'idée à la pièce</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-visual">
+      <div id="vase-wrap">
+        <canvas id="vase-canvas"></canvas>
+        <div class="vase-hint">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+          Survoler pour imprimer
+        </div>
+      </div>
+    </div>
+    <div class="hero-label">Studio ML3D</div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="services-header reveal">
+    <div>
+      <div class="section-tag">Services</div>
+      <h2>Trois façons de <em>travailler ensemble</em></h2>
+    </div>
+    <p class="section-intro">Que vous soyez particulier avec une idée, ou professionnel avec un besoin technique, Studio ML3D s'adapte à votre projet.</p>
+  </div>
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      </div>
+      <h3>Boutique</h3>
+      <p>Des objets conçus et imprimés par mes soins, disponibles immédiatement. Déco, accessoires, pièces utilitaires — chaque produit est pensé pour durer.</p>
+      <div class="service-tags">
+        <span class="stag">Expédition sous 48h</span>
+        <span class="stag">Etsy & site</span>
+        <span class="stag">Plusieurs couleurs</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <h3>Sur mesure</h3>
+      <p>Vous avez une idée en tête, une pièce à remplacer, un cadeau à personnaliser ? Je conçois et imprime exactement ce dont vous avez besoin.</p>
+      <div class="service-tags">
+        <span class="stag">Brief en ligne</span>
+        <span class="stag">3 révisions incluses</span>
+        <span class="stag">Délai annoncé</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      </div>
+      <h3>Prototypage B2B</h3>
+      <p>Startups, bureaux d'études, PME — je conçois vos prototypes fonctionnels et petites séries sous NDA si nécessaire. Fichiers STEP/STL fournis.</p>
+      <div class="service-tags">
+        <span class="stag">Devis sous 24h</span>
+        <span class="stag">NDA possible</span>
+        <span class="stag">Facture pro</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="boutique">
+  <div class="boutique-header reveal">
+    <div>
+      <div class="section-tag">Boutique</div>
+      <h2>Produits <em>prêts à expédier</em></h2>
+    </div>
+    <p class="section-intro">Des pièces conçues et imprimées par mes soins, disponibles immédiatement. Chaque produit est testé et contrôlé avant expédition.</p>
+  </div>
+
+  <div class="boutique-grid reveal">
+
+    <!-- Produit 1 : Vase design -->
+    <div class="product-card">
+      <div class="product-img">
+        <div class="product-placeholder">
+          <svg viewBox="0 0 24 24"><path d="M8 3h8l1 7c0 4-2 7-5 8-3-1-5-4-5-8l1-7z"/><line x1="6" y1="9" x2="18" y2="9"/></svg>
+          <span>Photo à venir</span>
+        </div>
+        <span class="product-badge badge-new">Nouveau</span>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Vase design</div>
+        <div class="product-desc">Vase imprimé en PLA, finition mate élégante. Disponible en plusieurs coloris sur demande.</div>
+        <div class="product-footer">
+          <span class="product-price">14,99 €</span>
+          <a href="#" class="btn-buy">
+            Voir sur Etsy
+            <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Placeholder 2 -->
+    <div class="product-card">
+      <div class="product-img">
+        <div class="product-placeholder">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg>
+          <span>Produit à venir</span>
+        </div>
+        <span class="product-badge badge-soon">Bientôt</span>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Prochain produit</div>
+        <div class="product-desc">Un nouveau produit arrive bientôt dans la boutique.</div>
+        <div class="product-footer">
+          <span class="product-price">— €</span>
+          <span class="btn-buy-soon">Bientôt disponible</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Placeholder 3 -->
+    <div class="product-card">
+      <div class="product-img">
+        <div class="product-placeholder">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg>
+          <span>Produit à venir</span>
+        </div>
+        <span class="product-badge badge-soon">Bientôt</span>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Prochain produit</div>
+        <div class="product-desc">Un nouveau produit arrive bientôt dans la boutique.</div>
+        <div class="product-footer">
+          <span class="product-price">— €</span>
+          <span class="btn-buy-soon">Bientôt disponible</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="boutique-cta reveal">
+    <p>Vous cherchez quelque chose de spécifique ? Je peux le concevoir et l'imprimer pour vous.</p>
+    <a href="#devis" class="btn-primary">Demander sur mesure</a>
+  </div>
+</section>
+
+<section id="process">
+  <div class="reveal">
+    <div class="section-tag">Comment ça marche</div>
+    <h2>Un process <em>simple</em> et transparent</h2>
+    <p class="section-intro">Du premier contact à la livraison, chaque étape est claire. Pas de mauvaise surprise.</p>
+  </div>
+  <div class="process-steps reveal">
+    <div class="process-step">
+      <div class="process-num">01</div>
+      <h3>Brief</h3>
+      <p>Décrivez votre projet via le formulaire ou par email. Dimensions, usage, matière souhaitée, délai — plus c'est précis, mieux c'est.</p>
+    </div>
+    <div class="process-step">
+      <div class="process-num">02</div>
+      <h3>Devis</h3>
+      <p>Je vous envoie un devis détaillé sous 24h avec le prix, le délai estimé et les options matière. Aucun engagement à cette étape.</p>
+    </div>
+    <div class="process-step">
+      <div class="process-num">03</div>
+      <h3>Conception & impression</h3>
+      <p>Après validation, je conçois la pièce sur SolidWorks et procède à l'impression. Vous recevez un aperçu avant impression si besoin.</p>
+    </div>
+    <div class="process-step">
+      <div class="process-num">04</div>
+      <h3>Livraison</h3>
+      <p>Expédition en Colissimo suivi ou remise en main propre à Reims. Suivi de commande envoyé par email dès l'expédition.</p>
+    </div>
+  </div>
+</section>
+
+<section id="materiaux">
+  <div class="mat-header reveal">
+    <div>
+      <div class="section-tag">Matériaux</div>
+      <h2>La bonne matière pour <em>chaque usage</em></h2>
+    </div>
+    <p class="section-intro">Le choix du matériau détermine la résistance, la flexibilité et l'aspect de votre pièce. Je vous conseille sur la meilleure option.</p>
+  </div>
+  <div class="mat-grid reveal">
+    <div class="mat-card">
+      <div class="mat-name">PLA</div>
+      <div class="mat-desc">Matériau standard, bonne résistance mécanique, large choix de couleurs. Idéal pour la majorité des projets.</div>
+      <div class="mat-uses"><span class="mat-use">Déco</span><span class="mat-use">Prototypes visuels</span><span class="mat-use">Accessoires</span></div>
+    </div>
+    <div class="mat-card">
+      <div class="mat-name">PETG</div>
+      <div class="mat-desc">Plus résistant à la chaleur et aux chocs que le PLA. Légèrement flexible. Parfait pour les pièces techniques en extérieur.</div>
+      <div class="mat-uses"><span class="mat-use">Pièces techniques</span><span class="mat-use">Extérieur</span><span class="mat-use">Alimentaire</span></div>
+    </div>
+    <div class="mat-card">
+      <div class="mat-name">ABS / ASA</div>
+      <div class="mat-desc">Haute résistance thermique et aux UV (ASA). Recommandé pour les pièces sous capot ou exposées aux intempéries.</div>
+      <div class="mat-uses"><span class="mat-use">Automobile</span><span class="mat-use">UV résistant</span><span class="mat-use">Haute temp.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="about-visual">
+    <div class="about-placeholder">
+      <div class="icon">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+      <p>Votre photo ici</p>
+    </div>
+  </div>
+  <div class="about-text reveal">
+    <div class="about-tag">À propos</div>
+    <h2>Mathis Leroy, <em>concepteur</em> et maker</h2>
+    <p>Passionné par la fabrication numérique depuis plusieurs années, j'ai fondé Studio ML3D pour mettre mes compétences en conception CAO et impression 3D au service de vos projets — qu'ils soient créatifs, techniques ou industriels.</p>
+    <p>Basé à Reims, je travaille aussi bien avec des particuliers qui ont une idée à concrétiser qu'avec des professionnels qui ont besoin d'un partenaire fiable pour leurs prototypes.</p>
+    <p>Chaque pièce sort de mon atelier après un contrôle qualité rigoureux. Je m'engage sur des délais réalistes et je reste disponible tout au long du projet.</p>
+    <div class="about-highlights">
+      <div class="about-highlight">Maîtrise SolidWorks — conception de pièces complexes</div>
+      <div class="about-highlight">Imprimantes FDM multi-matériaux (PLA, PETG, ABS/ASA)</div>
+      <div class="about-highlight">Basé à Reims, expédition dans toute la France</div>
+      <div class="about-highlight">Disponible pour rendez-vous en atelier sur demande</div>
+    </div>
+  </div>
+</section>
+
+<section id="devis">
+  <div class="devis-inner reveal">
+    <div class="section-tag" style="justify-content:center">Contact & devis</div>
+    <h2>Parlons de votre <em>projet</em></h2>
+    <p class="section-intro">Remplissez ce formulaire, je vous réponds sous 24h avec un devis détaillé. Aucun engagement.</p>
+    <form onsubmit="handleSubmit(event)">
+      <div class="form-grid">
+        <div>
+          <label for="prenom">Prénom</label>
+          <input type="text" id="prenom" placeholder="Votre prénom" required>
+        </div>
+        <div>
+          <label for="nom">Nom</label>
+          <input type="text" id="nom" placeholder="Votre nom">
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="vous@exemple.fr" required>
+        </div>
+        <div>
+          <label for="type">Type de projet</label>
+          <select id="type">
+            <option value="">Sélectionner…</option>
+            <option>Produit de la boutique</option>
+            <option>Sur mesure — particulier</option>
+            <option>Prototypage — professionnel</option>
+            <option>Autre</option>
+          </select>
+        </div>
+        <div class="form-full">
+          <label for="description">Décrivez votre projet</label>
+          <textarea id="description" placeholder="Dimensions approximatives, usage prévu, matière souhaitée, délai souhaité…" required></textarea>
+        </div>
+        <div class="form-full">
+          <label for="budget">Budget estimé (optionnel)</label>
+          <input type="text" id="budget" placeholder="ex. 50–100 €">
+        </div>
+      </div>
+      <div class="form-submit">
+        <button type="submit" class="btn-primary">Envoyer ma demande</button>
+      </div>
+      <p class="form-note">Réponse garantie sous 24h · contact@studioml3d.fr</p>
+    </form>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="faq-inner">
+    <div class="faq-header reveal">
+      <div class="section-tag">FAQ</div>
+      <h2>Questions <em>fréquentes</em></h2>
+    </div>
+    <div id="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Quels sont vos délais ?<svg class="faq-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Pour les produits série en stock, l'expédition se fait sous 48h ouvrées. Pour les pièces sur mesure, comptez 3 à 7 jours selon la complexité et la matière. Les projets B2B sont planifiés ensemble dès validation du devis.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Vous acceptez les fichiers STL ou STEP déjà modélisés ?<svg class="faq-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Oui, tout à fait. Si vous avez déjà votre fichier 3D (STL, STEP, IGES, SolidWorks…), je peux passer directement à l'impression. Je vérifie toujours la faisabilité et l'orientation optimale avant de lancer.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Quelle est la taille maximale des pièces ?<svg class="faq-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">En FDM, le volume d'impression disponible est de 300 × 300 × 400 mm. Pour les pièces plus grandes, je peux les imprimer en plusieurs parties et assembler avec des inserts filetés ou encastrements.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Proposez-vous la conception de zéro si je n'ai pas de fichier 3D ?<svg class="faq-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Absolument, c'est même l'une de mes spécialités. Sur la base d'un croquis, de photos, ou d'une description, je modélise la pièce sur SolidWorks et vous soumets un aperçu 3D avant impression. Trois révisions sont incluses dans le devis standard.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Comment se passe la livraison ?<svg class="faq-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">J'expédie en Colissimo avec numéro de suivi dans toute la France. La remise en main propre est également possible à Reims, sans frais. Les pièces fragiles sont conditionnées avec soin dans de la mousse de protection.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Travaillez-vous avec des entreprises et start-ups ?<svg class="faq-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Oui, je travaille régulièrement avec des PME, bureaux d'études et start-ups pour du prototypage rapide et des petites séries. Je fournis des devis HT, factures en bonne et due forme, et peux signer un NDA si votre projet le nécessite.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <a href="#" class="footer-logo">Studio <span>ML</span>3D</a>
+  <ul class="footer-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#devis">Contact</a></li>
+    <li><a href="mailto:contact@studioml3d.fr">contact@studioml3d.fr</a></li>
+    <li><a href="#">Mentions légales</a></li>
+  </ul>
+  <p class="footer-copy">© 2025 Studio ML3D — Mathis Leroy · Reims · Auto-entrepreneur</p>
+</footer>
+
+<script>
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(r => observer.observe(r));
+
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const answer = item.querySelector('.faq-a');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => {
+    i.classList.remove('open');
+    i.querySelector('.faq-a').style.maxHeight = '0';
+  });
+  if (!isOpen) {
+    item.classList.add('open');
+    answer.style.maxHeight = answer.scrollHeight + 'px';
+  }
+}
+
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('button[type=submit]');
+  btn.textContent = 'Message envoyé ✓';
+  btn.style.background = '#2d6a4f';
+  btn.disabled = true;
+}
+
+// ---- VASE INTERACTIVE CANVAS ----
+(function() {
+  const wrap = document.getElementById('vase-wrap');
+  const canvas = document.getElementById('vase-canvas');
+  const ctx = canvas.getContext('2d');
+
+  const W = 280, H = 380;
+  canvas.width = W * 2; canvas.height = H * 2;
+  canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+  ctx.scale(2, 2);
+
+  // Vase profile: array of [x_radius, y_normalized 0..1] from bottom to top
+  // A elegant tall vase with waist and flared rim
+  const profile = [
+    [38, 0.00],  // base outer
+    [42, 0.04],
+    [36, 0.12],
+    [28, 0.25],  // waist
+    [22, 0.38],
+    [20, 0.48],
+    [22, 0.58],
+    [30, 0.70],
+    [36, 0.80],
+    [40, 0.88],
+    [38, 0.95],
+    [32, 1.00],  // rim
+  ];
+
+  const TOTAL_LAYERS = 90;
+  const cx = W / 2;
+  const vaseBottom = H - 30;
+  const vaseHeight = H - 70;
+
+  let printedLayers = 0;
+  let targetLayers = TOTAL_LAYERS;
+  let animFrame;
+  let isHovered = false;
+
+  function getRadius(t) {
+    // t = 0..1 from bottom to top
+    for (let i = 0; i < profile.length - 1; i++) {
+      const [r0, t0] = profile[i];
+      const [r1, t1] = profile[i + 1];
+      if (t >= t0 && t <= t1) {
+        const frac = (t - t0) / (t1 - t0);
+        return r0 + (r1 - r0) * frac;
+      }
+    }
+    return profile[profile.length - 1][0];
+  }
+
+  function layerY(layer) {
+    return vaseBottom - (layer / TOTAL_LAYERS) * vaseHeight;
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    const layers = Math.floor(printedLayers);
+    if (layers === 0) {
+      // Draw ghost outline
+      drawGhost();
+      return;
+    }
+
+    // Draw printed layers from bottom up
+    for (let i = 0; i < layers; i++) {
+      const t = i / TOTAL_LAYERS;
+      const tNext = (i + 1) / TOTAL_LAYERS;
+      const r = getRadius(t);
+      const y = layerY(i);
+      const h = layerY(i) - layerY(i + 1) + 0.5;
+
+      // Layer fill - warm terracotta gradient top layers
+      const progress = i / TOTAL_LAYERS;
+      const isTop = i >= layers - 3;
+
+      if (isTop) {
+        // Nozzle accent color on freshly printed layers
+        ctx.fillStyle = `rgba(200, 80, 26, ${0.85 - (layers - 1 - i) * 0.25})`;
+      } else {
+        // Alternating subtle layer lines
+        const even = i % 2 === 0;
+        ctx.fillStyle = even ? 'rgba(180,176,168,0.9)' : 'rgba(165,161,153,0.9)';
+      }
+
+      // Left side ellipse arc
+      ctx.beginPath();
+      ctx.ellipse(cx, y, r, 3.5, 0, Math.PI, 0, true);
+      ctx.ellipse(cx, y + h, r, 3.5, 0, 0, Math.PI, true);
+      ctx.closePath();
+      ctx.fill();
+
+      // Subtle stroke for definition
+      ctx.strokeStyle = 'rgba(100,96,90,0.12)';
+      ctx.lineWidth = 0.4;
+      ctx.stroke();
+    }
+
+    // Top ellipse highlight
+    const topT = layers / TOTAL_LAYERS;
+    const topR = getRadius(topT);
+    const topY = layerY(layers);
+    ctx.beginPath();
+    ctx.ellipse(cx, topY, topR, 3.5, 0, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(200,80,26,0.6)';
+    ctx.fill();
+
+    // Nozzle
+    if (layers < TOTAL_LAYERS) {
+      const nozzleR = getRadius(layers / TOTAL_LAYERS);
+      const nozzleX = cx + nozzleR + 2;
+      const nozzleY = topY - 28;
+      ctx.beginPath();
+      ctx.moveTo(nozzleX, nozzleY);
+      ctx.lineTo(nozzleX, topY - 4);
+      ctx.strokeStyle = 'rgba(14,14,13,0.35)';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([3, 2]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      // Nozzle tip
+      ctx.beginPath();
+      ctx.moveTo(nozzleX - 6, nozzleY - 2);
+      ctx.lineTo(nozzleX + 6, nozzleY - 2);
+      ctx.lineTo(nozzleX + 4, nozzleY + 8);
+      ctx.lineTo(nozzleX - 4, nozzleY + 8);
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(14,14,13,0.55)';
+      ctx.fill();
+    }
+
+    // Ghost of remaining top portion
+    if (layers < TOTAL_LAYERS) {
+      ctx.save();
+      ctx.globalAlpha = 0.12;
+      ctx.setLineDash([4, 4]);
+      ctx.strokeStyle = '#6b6a64';
+      ctx.lineWidth = 1;
+      for (let i = layers; i < TOTAL_LAYERS; i += 4) {
+        const t = i / TOTAL_LAYERS;
+        const r = getRadius(t);
+        const y = layerY(i);
+        ctx.beginPath();
+        ctx.ellipse(cx, y, r, 3, 0, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+      ctx.restore();
+      ctx.setLineDash([]);
+    }
+
+    // Base shadow
+    ctx.beginPath();
+    ctx.ellipse(cx, vaseBottom + 6, 44, 6, 0, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(0,0,0,0.06)';
+    ctx.fill();
+  }
+
+  function drawGhost() {
+    ctx.save();
+    ctx.globalAlpha = 0.15;
+    ctx.setLineDash([4, 4]);
+    ctx.strokeStyle = '#6b6a64';
+    ctx.lineWidth = 1;
+    for (let i = 0; i < TOTAL_LAYERS; i += 4) {
+      const t = i / TOTAL_LAYERS;
+      const r = getRadius(t);
+      const y = layerY(i);
+      ctx.beginPath();
+      ctx.ellipse(cx, y, r, 3, 0, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+    ctx.restore();
+    ctx.setLineDash([]);
+
+    ctx.beginPath();
+    ctx.ellipse(cx, vaseBottom + 6, 44, 6, 0, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(0,0,0,0.04)';
+    ctx.fill();
+  }
+
+  function animate() {
+    const diff = targetLayers - printedLayers;
+    if (Math.abs(diff) > 0.3) {
+      printedLayers += diff * 0.07;
+      draw();
+      animFrame = requestAnimationFrame(animate);
+    } else {
+      printedLayers = targetLayers;
+      draw();
+      animFrame = null;
+    }
+  }
+
+  function startAnim() {
+    if (animFrame) cancelAnimationFrame(animFrame);
+    animate();
+  }
+
+  // Init at 60% printed
+  printedLayers = TOTAL_LAYERS * 0.6;
+  targetLayers = TOTAL_LAYERS * 0.6;
+  draw();
+
+  // Hover: mouse Y maps to print progress
+  wrap.addEventListener('mousemove', e => {
+    const rect = wrap.getBoundingClientRect();
+    const relY = e.clientY - rect.top;
+    const frac = 1 - (relY / rect.height);
+    targetLayers = Math.max(2, Math.min(TOTAL_LAYERS, Math.round(frac * TOTAL_LAYERS)));
+    startAnim();
+  });
+
+  wrap.addEventListener('mouseleave', () => {
+    targetLayers = TOTAL_LAYERS * 0.6;
+    startAnim();
+  });
+
+  // Touch support
+  wrap.addEventListener('touchmove', e => {
+    e.preventDefault();
+    const rect = wrap.getBoundingClientRect();
+    const relY = e.touches[0].clientY - rect.top;
+    const frac = 1 - (relY / rect.height);
+    targetLayers = Math.max(2, Math.min(TOTAL_LAYERS, Math.round(frac * TOTAL_LAYERS)));
+    startAnim();
+  }, { passive: false });
+})();
+</script>
+</body>
+</html>
