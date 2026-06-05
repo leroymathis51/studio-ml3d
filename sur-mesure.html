@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sur mesure — Studio ML3D</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--black:#0e0e0d;--white:#fafaf8;--gray-100:#f2f1ee;--gray-200:#e4e3de;--gray-400:#a8a69e;--gray-600:#6b6a64;--accent:#c8501a;--accent-light:#f5ede8;--font-display:'DM Serif Display',serif;--font-body:'DM Sans',sans-serif}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--white);color:var(--black);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 5vw;height:64px;background:rgba(250,250,248,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--gray-200)}
+.nav-logo{font-family:var(--font-display);font-size:1.25rem;letter-spacing:-.01em;color:var(--black);text-decoration:none}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:1.5rem;list-style:none;align-items:center}
+.nav-links a{font-size:.875rem;color:var(--gray-600);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--black)}
+.nav-cta{background:var(--black)!important;color:var(--white)!important;padding:8px 18px;border-radius:100px;font-weight:500!important;font-size:.875rem!important}
+.nav-cta:hover{background:var(--accent)!important}
+.nav-active{color:var(--black)!important;font-weight:500}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none}
+.hamburger span{display:block;width:22px;height:2px;background:var(--black);border-radius:2px}
+.mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;bottom:0;background:var(--white);z-index:99;padding:2rem 5vw;flex-direction:column;gap:1rem;overflow-y:auto}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-size:1.125rem;color:var(--black);text-decoration:none;padding:1rem 0;border-bottom:1px solid var(--gray-200)}
+.mobile-menu .mobile-cta{background:var(--black);color:var(--white);padding:14px 28px;border-radius:100px;text-align:center;margin-top:1rem;font-weight:500}
+.page-hero{padding:8rem 5vw 4rem;background:var(--accent-light)}
+.page-hero-tag{font-size:.75rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:8px}
+.page-hero-tag::before{content:'';display:block;width:24px;height:1px;background:var(--accent)}
+.page-hero h1{font-family:var(--font-display);font-size:clamp(2rem,4vw,3.5rem);line-height:1.1;letter-spacing:-.02em;margin-bottom:1rem}
+.page-hero h1 em{font-style:italic;color:var(--accent)}
+.page-hero p{font-size:1.0625rem;color:var(--gray-600);max-width:560px;line-height:1.7}
+.section{padding:5rem 5vw}
+h2{font-family:var(--font-display);font-size:clamp(1.8rem,3vw,2.5rem);line-height:1.1;letter-spacing:-.02em;margin-bottom:1.25rem}
+h2 em{font-style:italic;color:var(--accent)}
+.section-tag{font-size:.75rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:8px}
+.section-tag::before{content:'';display:block;width:24px;height:1px;background:var(--accent)}
+.usecases{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:3rem}
+.usecase{background:var(--white);border:1px solid var(--gray-200);border-radius:12px;padding:1.5rem}
+.usecase-icon{width:40px;height:40px;background:var(--accent-light);border-radius:9px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem}
+.usecase-icon svg{width:20px;height:20px;stroke:var(--accent);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.usecase h3{font-family:var(--font-display);font-size:1.0625rem;margin-bottom:.5rem}
+.usecase p{font-size:.875rem;color:var(--gray-600);line-height:1.6}
+.process-dark{background:var(--black);padding:5rem 5vw;color:var(--white)}
+.process-dark .section-tag{color:var(--accent)}
+.process-dark h2{color:var(--white)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin-top:3rem}
+.step-item{border-top:1px solid rgba(255,255,255,.12);padding-top:1.5rem}
+.step-num{font-family:var(--font-display);font-size:2.5rem;color:rgba(255,255,255,.1);line-height:1;margin-bottom:1rem}
+.step-item h3{font-size:.9375rem;font-weight:500;margin-bottom:.5rem}
+.step-item p{font-size:.8125rem;color:rgba(255,255,255,.45);line-height:1.6}
+.devis-section{padding:5rem 5vw;background:var(--gray-100)}
+.devis-inner{max-width:680px;margin:0 auto;text-align:center}
+.devis-inner h2{margin-bottom:1rem}
+.devis-inner p{font-size:1.0625rem;color:var(--gray-600);margin-bottom:3rem;line-height:1.7}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;text-align:left}
+.form-full{grid-column:1/-1}
+label{display:block;font-size:.8125rem;font-weight:500;color:var(--gray-600);margin-bottom:6px}
+input,select,textarea{width:100%;background:var(--white);border:1px solid var(--gray-200);border-radius:10px;padding:12px 16px;font-size:.9375rem;font-family:var(--font-body);color:var(--black);transition:border-color .2s;outline:none;-webkit-appearance:none}
+input:focus,select:focus,textarea:focus{border-color:var(--black)}
+textarea{resize:vertical;min-height:120px}
+.file-upload-area{width:100%;border:2px dashed var(--gray-200);border-radius:10px;padding:1.5rem;text-align:center;cursor:pointer;transition:border-color .2s;background:var(--white);position:relative}
+.file-upload-area:hover{border-color:var(--gray-400)}
+.file-upload-area input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.file-upload-icon{width:36px;height:36px;margin:0 auto .75rem;stroke:var(--gray-400);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.file-upload-text{font-size:.875rem;color:var(--gray-600)}
+.file-upload-text span{color:var(--accent);font-weight:500}
+.file-upload-hint{font-size:.75rem;color:var(--gray-400);margin-top:4px}
+.file-name{font-size:.8125rem;color:var(--accent);margin-top:8px;font-weight:500}
+.form-submit{margin-top:24px;display:flex;justify-content:center}
+.form-note{font-size:.8125rem;color:var(--gray-400);margin-top:1rem}
+.btn-primary{background:var(--black);color:var(--white);padding:14px 28px;border-radius:100px;font-size:.9375rem;font-weight:500;text-decoration:none;transition:background .2s;display:inline-block;border:none;cursor:pointer;font-family:var(--font-body)}
+.btn-primary:hover{background:var(--accent)}
+footer{background:var(--black);color:rgba(255,255,255,.45);padding:3rem 5vw;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem}
+.footer-logo{font-family:var(--font-display);font-size:1.125rem;color:var(--white);text-decoration:none}
+.footer-logo span{color:var(--accent)}
+.footer-links{display:flex;gap:1.5rem;list-style:none;flex-wrap:wrap}
+.footer-links a{font-size:.8125rem;color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:var(--white)}
+.footer-copy{font-size:.8125rem;width:100%}
+@media(max-width:1024px){.usecases{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){.nav-links{display:none}.hamburger{display:flex}.usecases{grid-template-columns:1fr}.steps{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.page-hero{padding:6rem 5vw 3rem}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">Studio <span>ML</span>3D</a>
+  <ul class="nav-links">
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="boutique.html">Boutique</a></li>
+    <li><a href="sur-mesure.html" class="nav-active">Sur mesure</a></li>
+    <li><a href="prototypage.html">Prototypage B2B</a></li>
+    <li><a href="#devis" class="nav-cta">Devis gratuit</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" onclick="toggleMenu()">Accueil</a>
+  <a href="boutique.html" onclick="toggleMenu()">Boutique</a>
+  <a href="sur-mesure.html" onclick="toggleMenu()">Sur mesure</a>
+  <a href="prototypage.html" onclick="toggleMenu()">Prototypage B2B</a>
+  <a href="#devis" class="mobile-cta" onclick="toggleMenu()">Devis gratuit</a>
+</div>
+
+<div class="page-hero">
+  <div class="page-hero-tag">Sur mesure</div>
+  <h1>Votre idée, <em>conçue et imprimée</em></h1>
+  <p>Vous avez une idée en tête, une pièce à remplacer ou à réparer, un cadeau à personnaliser ? Je conçois sur SolidWorks et imprime exactement ce dont vous avez besoin.</p>
+</div>
+
+<section class="section">
+  <div class="section-tag">Pour qui ?</div>
+  <h2>Des projets <em>de toute nature</em></h2>
+  <div class="usecases">
+    <div class="usecase">
+      <div class="usecase-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+      <h3>Cadeau personnalisé</h3>
+      <p>Objets avec prénom, initiales, date ou forme unique. Un cadeau qui ne ressemble à aucun autre.</p>
+    </div>
+    <div class="usecase">
+      <div class="usecase-icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+      <h3>Pièce à remplacer ou réparer</h3>
+      <p>Pièce cassée introuvable dans le commerce ? Je la reproduis à l'identique ou l'améliore.</p>
+    </div>
+    <div class="usecase">
+      <div class="usecase-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+      <h3>Accessoire tech ou déco</h3>
+      <p>Support téléphone, organiseur de bureau, boîtier sur mesure, décoration intérieure unique.</p>
+    </div>
+    <div class="usecase">
+      <div class="usecase-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="14.31" y1="8" x2="20.05" y2="17.94"/><line x1="9.69" y1="8" x2="21.17" y2="8"/><line x1="7.38" y1="12" x2="13.12" y2="2.06"/><line x1="9.69" y1="16" x2="3.95" y2="6.06"/><line x1="14.31" y1="16" x2="2.83" y2="16"/><line x1="16.62" y1="12" x2="10.88" y2="21.94"/></svg></div>
+      <h3>Pièce fonctionnelle</h3>
+      <p>Clip, fixation, adaptateur, boîtier technique — conçu pour tenir dans la durée avec le bon matériau.</p>
+    </div>
+    <div class="usecase">
+      <div class="usecase-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+      <h3>Déco & architecture</h3>
+      <p>Maquette, figurine, objet décoratif, mise en scène — impression fine avec finition soignée.</p>
+    </div>
+    <div class="usecase">
+      <div class="usecase-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+      <h3>Projet créatif</h3>
+      <p>Costumes, accessoires, répliques, sculptures — je m'adapte à tous les projets créatifs.</p>
+    </div>
+  </div>
+</section>
+
+<div class="process-dark">
+  <div class="section-tag">Comment ça marche</div>
+  <h2>Simple, <em>de bout en bout</em></h2>
+  <div class="steps">
+    <div class="step-item"><div class="step-num">01</div><h3>Vous décrivez</h3><p>Via le formulaire ci-dessous : description, dimensions, usage, photos ou croquis. Plus c'est précis, mieux c'est.</p></div>
+    <div class="step-item"><div class="step-num">02</div><h3>Je vous réponds sous 24h</h3><p>Devis détaillé avec prix, délai et choix de matière. Aucun engagement de votre côté.</p></div>
+    <div class="step-item"><div class="step-num">03</div><h3>Conception & impression</h3><p>Je modélise sur SolidWorks, vous soumets un aperçu 3D si besoin, puis j'imprime après validation.</p></div>
+    <div class="step-item"><div class="step-num">04</div><h3>Livraison</h3><p>Expédition Colissimo suivi ou remise en main propre. 3 révisions incluses dans chaque devis.</p></div>
+  </div>
+</div>
+
+<section class="devis-section" id="devis">
+  <div class="devis-inner">
+    <div class="section-tag" style="justify-content:center">Votre projet</div>
+    <h2>Décrivez votre <em>idée</em></h2>
+    <p>Plus vous êtes précis, plus mon devis sera juste. Pas d'inquiétude si vous ne savez pas tout — on affine ensemble.</p>
+    <form onsubmit="handleSubmit(event)">
+      <div class="form-grid">
+        <div><label>Prénom</label><input type="text" placeholder="Votre prénom" required></div>
+        <div><label>Nom</label><input type="text" placeholder="Votre nom"></div>
+        <div><label>Email</label><input type="email" placeholder="vous@exemple.fr" required></div>
+        <div><label>Type de projet</label>
+          <select>
+            <option value="">Sélectionner…</option>
+            <option>Cadeau personnalisé</option>
+            <option>Pièce à remplacer / réparer</option>
+            <option>Accessoire ou déco</option>
+            <option>Pièce fonctionnelle</option>
+            <option>Autre</option>
+          </select>
+        </div>
+        <div class="form-full"><label>Décrivez votre projet</label><textarea placeholder="Dimensions approximatives, usage prévu, matière souhaitée, délai…" required></textarea></div>
+        <div class="form-full">
+          <label>Photo, plan ou croquis (optionnel)</label>
+          <div class="file-upload-area">
+            <input type="file" accept="image/*,.pdf,.dxf,.stl,.step,.stp" onchange="handleFile(this)">
+            <svg class="file-upload-icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <div class="file-upload-text"><span>Cliquez pour choisir</span> ou glissez un fichier</div>
+            <div class="file-upload-hint">Images, PDF, DXF, STL, STEP — max 20 Mo</div>
+            <div class="file-name" id="fileName"></div>
+          </div>
+        </div>
+        <div class="form-full"><label>Budget estimé (optionnel)</label><input type="text" placeholder="ex. 30–80 €"></div>
+      </div>
+      <div class="form-submit"><button type="submit" class="btn-primary">Envoyer ma demande</button></div>
+      <p class="form-note">Réponse garantie sous 24h · contact@studioml3d.fr</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <a href="index.html" class="footer-logo">Studio <span>ML</span>3D</a>
+  <ul class="footer-links">
+    <li><a href="boutique.html">Boutique</a></li>
+    <li><a href="sur-mesure.html">Sur mesure</a></li>
+    <li><a href="prototypage.html">Prototypage B2B</a></li>
+    <li><a href="mailto:contact@studioml3d.fr">contact@studioml3d.fr</a></li>
+  </ul>
+  <p class="footer-copy">© 2025 Studio ML3D — Mathis Leroy · Auto-entrepreneur</p>
+</footer>
+<script>
+function toggleMenu(){const m=document.getElementById('mobileMenu');m.classList.toggle('open');document.body.style.overflow=m.classList.contains('open')?'hidden':'';}
+function handleSubmit(e){e.preventDefault();const btn=e.target.querySelector('button[type=submit]');btn.textContent='Message envoyé ✓';btn.style.background='#2d6a4f';btn.disabled=true;}
+function handleFile(input){const name=input.files[0]?.name;if(name)document.getElementById('fileName').textContent='📎 '+name;}
+</script>
+</body>
+</html>
