@@ -20,7 +20,8 @@ body{font-family:var(--font-body);background:var(--white);color:var(--black);fon
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 5vw;height:64px;background:rgba(250,250,248,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--gray-200)}
-.nav-logo{font-family:var(--font-display);font-size:1.25rem;letter-spacing:-.01em;color:var(--black);text-decoration:none}
+.nav-logo{display:flex;align-items:center;text-decoration:none;height:36px}
+.nav-logo img{height:36px;width:auto;display:block}
 .nav-logo span{color:var(--accent)}
 .nav-links{display:flex;gap:1.5rem;list-style:none;align-items:center}
 .nav-links a{font-size:.875rem;font-weight:400;color:var(--gray-600);text-decoration:none;transition:color .2s}
@@ -210,7 +211,7 @@ footer{background:var(--black);color:rgba(255,255,255,.45);padding:3rem 5vw;disp
 <body>
 
 <nav>
-  <a href="index.html" class="nav-logo">Studio <span>ML</span>3D</a>
+  <a href="index.html" class="nav-logo"><img src="Logo_Studio_ML3D.png" alt="Studio ML3D"></a>
   <ul class="nav-links">
     <li class="nav-item">
       <a href="#services">Services</a>
@@ -423,7 +424,7 @@ footer{background:var(--black);color:rgba(255,255,255,.45);padding:3rem 5vw;disp
 </section>
 
 <footer>
-  <a href="index.html" class="footer-logo">Studio <span>ML</span>3D</a>
+  <a href="index.html" class="footer-logo"><img src="Logo_Studio_ML3D.png" alt="Studio ML3D" style="height:32px;width:auto;filter:brightness(0) invert(1)"></a>
   <ul class="footer-links">
     <li><a href="boutique.html">Boutique</a></li>
     <li><a href="sur-mesure.html">Sur mesure</a></li>
@@ -478,12 +479,23 @@ function handleFile(input){
   canvas.style.width=W+'px';canvas.style.height=H+'px';
   ctx.scale(2,2);
 
+  // Bol design large et bas — style céramique moderne
   const profile=[
-    [32,0.00],[38,0.03],[34,0.08],[26,0.18],[20,0.30],
-    [16,0.42],[14,0.52],[16,0.62],[22,0.72],[30,0.82],
-    [36,0.90],[38,0.96],[34,1.00]
+    [55,0.00],  // base large
+    [60,0.03],  // légère semelle
+    [58,0.08],
+    [54,0.15],
+    [48,0.25],  // courbe rentrante
+    [42,0.38],
+    [38,0.50],  // centre
+    [42,0.60],
+    [52,0.72],  // s'ouvre
+    [64,0.82],
+    [72,0.90],  // bord évasé
+    [76,0.95],
+    [74,1.00],  // rim
   ];
-  const LAYERS=100,cx=W/2,vB=H-28,vH=H-65;
+  const LAYERS=100,cx=W/2,vB=H-40,vH=H-100;
 
   function getR(t){
     for(let i=0;i<profile.length-1;i++){
@@ -536,7 +548,7 @@ function handleFile(input){
     ctx.fillStyle='rgba(200,80,26,0.7)';ctx.fill();
 
     if(n<LAYERS){
-      const nx=cx+getR(n/LAYERS)+4,ny=topY-32;
+      const nx=cx+getR(n/LAYERS)+6,ny=topY-32;
       ctx.beginPath();ctx.moveTo(nx,ny);ctx.lineTo(nx,topY-5);
       ctx.strokeStyle='rgba(14,14,13,0.3)';ctx.lineWidth=1;ctx.setLineDash([3,2]);ctx.stroke();
       ctx.setLineDash([]);
@@ -545,7 +557,7 @@ function handleFile(input){
       drawGhostTop(n);
     }
 
-    ctx.beginPath();ctx.ellipse(cx,vB+5,38,5,0,0,Math.PI*2);
+    ctx.beginPath();ctx.ellipse(cx,vB+5,62,7,0,0,Math.PI*2);
     ctx.fillStyle='rgba(0,0,0,0.05)';ctx.fill();
   }
 
@@ -557,7 +569,7 @@ function handleFile(input){
       ctx.beginPath();ctx.ellipse(cx,y,r,3,0,0,Math.PI*2);ctx.stroke();
     }
     ctx.restore();ctx.setLineDash([]);
-    ctx.beginPath();ctx.ellipse(cx,vB+5,38,5,0,0,Math.PI*2);
+    ctx.beginPath();ctx.ellipse(cx,vB+5,62,7,0,0,Math.PI*2);
     ctx.fillStyle='rgba(0,0,0,0.03)';ctx.fill();
   }
 
